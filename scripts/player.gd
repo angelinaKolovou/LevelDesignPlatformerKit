@@ -20,6 +20,7 @@ var jump_single = true
 var jump_double = true
 
 var coins = 0
+var count_falls = 0
 var latest_checkpoint : Vector3
 
 @onready var particles_trail = $ParticlesTrail
@@ -124,13 +125,14 @@ func handle_controls(delta):
 # Handle gravity
 
 func handle_gravity(delta):
-
-	gravity += 25 * delta
+	if gravity < 10: 
+		gravity += 25 * delta
 
 	if gravity > 0 and is_on_floor():
 
 		jump_single = true
 		gravity = 0
+		count_falls = 0
 
 # Jumping
 
@@ -159,8 +161,18 @@ func collect_coin():
 func touched_goal() -> void:
 	reached_goal.emit()
 
+func player_falls() -> void:
+	
+	if count_falls < 1: 
+		global_position = Vector3(global_position.x, 10, global_position.z)
+		count_falls += 1
+	else: 
+		player_died()
+		count_falls = 0
+	
 func player_died() -> void:
 	global_position = latest_checkpoint
+	
 	
 func reached_checkpoint(checkpoint_pos : Vector3) -> void:
 	latest_checkpoint = checkpoint_pos
