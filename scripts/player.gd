@@ -164,7 +164,7 @@ func touched_goal() -> void:
 func player_falls() -> void:
 	
 	if count_falls < 1: 
-		global_position = Vector3(global_position.x, 10, global_position.z)
+		global_position = Vector3(global_position.x, 15, global_position.z)
 		count_falls += 1
 	else: 
 		player_died()
