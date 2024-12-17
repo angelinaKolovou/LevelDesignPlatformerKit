@@ -18,6 +18,7 @@ var look_at_player : bool = true
 var secondary_target : Node
 
 @onready var camera = $Camera
+@onready var player: CharacterBody3D = $"../Player"
 
 func _ready():
 	camera_rotation = rotation_degrees # Initial rotation
@@ -47,11 +48,13 @@ func _physics_process(delta):
 # Handle input
 
 func look_at_target(_target):
-	get_tree().paused = true
+	#get_tree().paused = true
+	player.set_physics_process(false)
 	secondary_target = _target
 	look_at_player = false
 	await get_tree().create_timer(2).timeout
-	get_tree().paused = false
+	#get_tree().paused = false
+	player.set_physics_process(true)
 	look_at_player = true
 
 func handle_input(delta):
