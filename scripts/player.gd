@@ -27,6 +27,7 @@ var latest_checkpoint : Vector3
 @onready var sound_footsteps = $SoundFootsteps
 @onready var model = $Character
 @onready var animation = $Character/AnimationPlayer
+@onready var ability_particles: CPUParticles3D = $AbilityParticles
 
 # Functions
 
@@ -90,7 +91,7 @@ func handle_effects(delta):
 				sound_footsteps.pitch_scale = speed_factor
 
 			if speed_factor > 0.75:
-				particles_trail.emitting = true
+				particles_trail.emitting = false
 
 		elif animation.current_animation != "idle":
 			animation.play("idle", 0.1)
@@ -133,6 +134,7 @@ func handle_gravity(delta):
 		jump_single = true
 		gravity = 0
 		count_falls = 0
+		ability_particles.emitting = true
 
 # Jumping
 
@@ -164,15 +166,17 @@ func touched_goal() -> void:
 func player_falls() -> void:
 	
 	if count_falls < 1: 
-		global_position = Vector3(global_position.x, 15, global_position.z)
+		global_position = Vector3(global_position.x, 19, global_position.z)
 		count_falls += 1
+		Audio.play("res://sounds/Teleport.mp3")
+		ability_particles.emitting = false
 	else: 
 		player_died()
 		count_falls = 0
 	
 func player_died() -> void:
+	Audio.play("res://sounds/DamageSound.mp3")
 	global_position = latest_checkpoint
-	
 	
 func reached_checkpoint(checkpoint_pos : Vector3) -> void:
 	latest_checkpoint = checkpoint_pos

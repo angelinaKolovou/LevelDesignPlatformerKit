@@ -11,6 +11,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func open_close_door(open : bool) -> void:
+	Audio.play("res://sounds/OpenDoor.mp3")
 	is_open = open
 	if open:
 		animation_player.play("open")

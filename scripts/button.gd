@@ -19,8 +19,10 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_button_area_3d_area_entered(_area: Area3D) -> void:
+	Audio.play("res://sounds/ButtonSound.mp3")
 	if cooldown_timer.is_stopped():
 		cooldown_timer.start()
+		
 		if not animation_player.is_playing():
 			if button_state:
 				button_state = false

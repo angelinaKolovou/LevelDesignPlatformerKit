@@ -60,16 +60,16 @@ func handle_input(delta):
 	
 	var input := Vector3.ZERO
 	
-	input.y = Input.get_axis("camera_right","camera_left")
-	input.x = Input.get_axis("camera_down","camera_up")
+	#input.y = Input.get_axis("camera_right","camera_left")
+	#input.x = Input.get_axis("camera_down","camera_up")
 	
 	camera_rotation += input.limit_length(1.0) * rotation_speed * delta
 	camera_rotation.x = clamp(camera_rotation.x, -80, -10)
 	
 	# Zooming
 	
-	zoom += Input.get_axis("zoom_in", "zoom_out") * zoom_speed * delta
-	zoom = clamp(zoom, zoom_maximum, zoom_minimum)
+	#zoom += Input.get_axis("zoom_in", "zoom_out") * zoom_speed * delta
+	#zoom = clamp(zoom, zoom_maximum, zoom_minimum)
 
 func close_app() -> void:
 	get_tree().quit()

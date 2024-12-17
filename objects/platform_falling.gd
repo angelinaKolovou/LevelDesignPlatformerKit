@@ -43,7 +43,7 @@ func restore_platform() -> void:
 
 func _on_body_entered(_body):
 	if !falling:
-		Audio.play("res://sounds/fall.ogg") # Play sound
+		Audio.play("res://sounds/PlatformFalling.mp3") # Play sound
 		scale = Vector3(1.25, 1, 1.25) # Animate scale
 		
 	falling = true

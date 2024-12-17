@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl2ed4gkybggf"]
+[gd_scene load_steps=15 format=3 uid="uid://dl2ed4gkybggf"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ffboj"]
 [ext_resource type="PackedScene" uid="uid://c0e27836xgmhi" path="res://objects/character.tscn" id="2_nero3"]
 [ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="3_0c7wt"]
+[ext_resource type="Texture2D" uid="uid://bs6puxrivhkk2" path="res://sprites/particle.png" id="4_4s31l"]
 [ext_resource type="ArrayMesh" uid="uid://deu06eho4c74" path="res://vfx_meshes/dust.res" id="4_mvhqy"]
 [ext_resource type="AudioStream" uid="uid://cydjn1ct3hps2" path="res://sounds/walking.ogg" id="5_ics1s"]
 
@@ -16,6 +17,7 @@ size = Vector3(0.25, 0.469604, 0.25)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q7stj"]
 diffuse_mode = 2
 specular_mode = 2
+albedo_texture = ExtResource("4_4s31l")
 metallic_specular = 0.0
 backlight = Color(0, 0.521569, 0.709804, 1)
 billboard_keep_scale = true
@@ -25,6 +27,26 @@ proximity_fade_distance = 0.25
 [sub_resource type="Curve" id="Curve_xh1e2"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.249284, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o048d"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.447135, 0.151921, 1, 1)
+albedo_texture = ExtResource("4_4s31l")
+emission_enabled = true
+billboard_mode = 1
+billboard_keep_scale = true
+proximity_fade_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_vis6o"]
+
+[sub_resource type="Curve" id="Curve_nrie3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.504298, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_jhlwu"]
+offsets = PackedFloat32Array(0, 0.131313, 0.43771, 1)
+colors = PackedColorArray(0.996094, 0.910156, 0.351563, 1, 0.99628, 0.914438, 0.382465, 1, 0.996699, 0.924071, 0.451994, 1, 1, 1, 1, 1)
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -54,6 +76,7 @@ modulate = Color(1, 1, 1, 0.705882)
 normal_fade = 0.5
 
 [node name="ParticlesTrail" type="CPUParticles3D" parent="."]
+visible = false
 material_override = SubResource("StandardMaterial3D_q7stj")
 cast_shadow = 0
 amount = 60
@@ -65,6 +88,22 @@ direction = Vector3(0, 0, 0)
 gravity = Vector3(0, 0.1, 0)
 scale_amount_min = 0.75
 scale_amount_curve = SubResource("Curve_xh1e2")
+
+[node name="AbilityParticles" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00263, -0.112181)
+material_override = SubResource("StandardMaterial3D_o048d")
+amount = 64
+mesh = SubResource("QuadMesh_vis6o")
+direction = Vector3(1, 1, 1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+damping_min = 0.5
+damping_max = 0.5
+scale_amount_min = 0.15
+scale_amount_max = 0.15
+scale_amount_curve = SubResource("Curve_nrie3")
+color_ramp = SubResource("Gradient_jhlwu")
 
 [node name="SoundFootsteps" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ics1s")

@@ -52,8 +52,8 @@ rim = 0.5
 [sub_resource type="SphereShape3D" id="SphereShape3D_bnkeq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hm51"]
-transparency = 1
 vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.882353, 0.372549, 1)
 albedo_texture = ExtResource("3_xl1k0")
 billboard_mode = 1
 billboard_keep_scale = true
@@ -83,6 +83,7 @@ shape = SubResource("SphereShape3D_bnkeq")
 
 [node name="Particles" type="CPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.447834, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_6hm51")
 mesh = SubResource("QuadMesh_744xy")
 direction = Vector3(1, 1, 1)
@@ -94,6 +95,7 @@ damping_max = 0.5
 scale_amount_min = 0.15
 scale_amount_max = 0.15
 scale_amount_curve = SubResource("Curve_6a7l3")
+color = Color(1, 0.847059, 0.337255, 1)
 color_ramp = SubResource("Gradient_7tsk2")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
